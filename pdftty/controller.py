@@ -20,8 +20,8 @@ class Controller:
         screen_size = screen.get_cols_rows()
 
         self.model.load_pdf(self.fname)
-        str_ = self.model.get_page_content(screen_size)
-        self.view.set_page_content(str_)
+        img_lines = self.model.get_page_content(screen_size)
+        self.view.set_page_content(img_lines)
 
         # start loop
         self.loop.run()

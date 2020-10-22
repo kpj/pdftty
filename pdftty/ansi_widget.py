@@ -4,12 +4,12 @@ import urwid
 
 
 class ANSICanvas(urwid.canvas.Canvas):
-    def __init__(self, size: Tuple[int, int], value: List[str]) -> None:
+    def __init__(self, size: Tuple[int, int], text_lines: List[str]) -> None:
         super().__init__()
 
         self.maxcols, self.maxrows = size
 
-        self.value = value
+        self.text_lines = text_lines
 
     def cols(self) -> int:
         return self.maxcols
@@ -27,8 +27,8 @@ class ANSICanvas(urwid.canvas.Canvas):
         assert rows is not None
 
         for i in range(rows):
-            if i < len(self.value):
-                text = self.value[i].encode('utf-8')
+            if i < len(self.text_lines):
+                text = self.text_lines[i].encode('utf-8')
             else:
                 text = b''
 
