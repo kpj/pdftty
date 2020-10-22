@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "pdftty"
+version = "0.0.1"
+description = "A PDF viewer for the terminal"
+authors = ["kpj <kpjkpjkpjkpjkpjkpj@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/kpj/pdftty"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+urwid = "^2.1.2"
+Pillow = "^8.0.0"
+pdf2image = "^1.14.0"
+numpy = "^1.19.2"
+ansicolors = "^1.1.8"
+
+[tool.poetry.dev-dependencies]
+
+[tool.poetry.scripts]
+pdftty = "pdftty:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
