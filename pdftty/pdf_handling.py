@@ -22,7 +22,7 @@ class PDFPage:
             self.fname, first_page=self.number,
             last_page=self.number,
             fmt='JPEG')
-        assert len(images) == 1
+        assert len(images) == 1, 'Could not find page, invalid page number?'
 
         self._img = images[0]
         return self._img

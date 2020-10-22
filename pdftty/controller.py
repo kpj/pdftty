@@ -11,7 +11,7 @@ class Controller:
 
         self.fname = fname
 
-    def main(self) -> None:
+    def main(self, page_number: int = 1) -> None:
         self.loop = urwid.MainLoop(
             self.view, unhandled_input=self._unhandled_input)
 
@@ -19,6 +19,7 @@ class Controller:
         screen = urwid.raw_display.Screen()
         screen_size = screen.get_cols_rows()
 
+        self.model.current_page_number = page_number
         self.model.load_pdf(self.fname)
         img_lines = self.model.get_page_content(screen_size)
         self.view.set_page_content(img_lines)
