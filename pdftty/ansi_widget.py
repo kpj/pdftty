@@ -46,6 +46,7 @@ class ANSIWidget(urwid.Widget):
 
     def set_content(self, lines: List[str]) -> None:
         self.lines = lines
+        self._invalidate()
 
     def render(
         self,

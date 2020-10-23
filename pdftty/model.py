@@ -19,10 +19,10 @@ class Model:
 
     def get_page_content(
         self,
-        size: Tuple[int, int], number: Optional[int] = None
+        target_size: Tuple[int, int], number: Optional[int] = None
     ) -> List[str]:
         assert self.viewer is not None, 'Viewer not loaded'
 
-        number = number or self.current_page_number
+        number = self.current_page_number if number is None else number
         page = self.viewer.get_page(number)
-        return page.render(size)
+        return page.render(target_size)

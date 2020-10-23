@@ -13,9 +13,9 @@ class Renderer:
     def tuple2ansi(self, rgb: Tuple[int, int, int]) -> str:
         return color(' ', bg=f'rgb({rgb[0]}, {rgb[1]}, {rgb[2]})')
 
-    def render(self, size: Tuple[int, int]) -> List[str]:
+    def render(self, target_size: Tuple[int, int]) -> List[str]:
         # rescale image
-        img_tmp = self.image.resize(size)
+        img_tmp = self.image.resize(target_size)
         pixels = np.asarray(img_tmp)
 
         # compute colors
