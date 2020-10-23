@@ -41,8 +41,8 @@ class ANSICanvas(urwid.canvas.Canvas):
 class ANSIWidget(urwid.Widget):
     _sizing = frozenset([urwid.widget.BOX])
 
-    def __init__(self) -> None:
-        self.lines = ['empty']
+    def __init__(self, text: str = '') -> None:
+        self.lines = text.split('\n')
 
     def set_content(self, lines: List[str]) -> None:
         self.lines = lines
@@ -54,3 +54,12 @@ class ANSIWidget(urwid.Widget):
         canvas = ANSICanvas(size, self.lines)
 
         return canvas
+
+
+if __name__ == '__main__':
+    txt = '\x1b[34;47mHello World\x1b[0m'
+
+    urwid.MainLoop(urwid.Pile([
+        urwid.Filler(urwid.Text(f'TextWidget: {txt}')),
+        ANSIWidget(f'ANSIWidget: {txt}'),
+    ])).run()
