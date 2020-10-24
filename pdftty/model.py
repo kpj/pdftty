@@ -10,19 +10,23 @@ class Model:
     def __init__(self, controller: 'Controller') -> None:
         self.controller = controller
 
-        self.viewer = None
+        self.pdf_viewer = None  # type: Optional[PDFViewer]
 
-        self.current_page_number = 1
+        self.page_region = None  # type: Optional[Tuple[int, int, int, int]]
+        self.current_page_number = None  # type: Optional[int]
 
-    def load_pdf(self, fname: str) -> None:
-        self.viewer = PDFViewer(fname)
+    def setup_viewer(self, fname: str, number: int) -> None:
+        self.current_page_number = number
+        self.pdf_viewer = PDFViewer(fname)
 
     def get_page_content(
         self,
-        target_size: Tuple[int, int], number: Optional[int] = None
+        target_size: Tuple[int, int],
+        number: Optional[int] = None
     ) -> List[str]:
-        assert self.viewer is not None, 'Viewer not loaded'
+        assert self.pdf_viewer is not None, 'Viewer not loaded'
 
-        number = self.current_page_number if number is None else number
-        page = self.viewer.get_page(number)
-        return page.render(target_size)
+        if number is None:
+            number = self.current_page_number
+
+        return self.pdf_viewer.render_page(target_size, number, self.page_region)
