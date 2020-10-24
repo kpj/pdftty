@@ -15,9 +15,9 @@ class Model:
         self.page_region = None  # type: Optional[Tuple[int, int, int, int]]
         self.current_page_number = None  # type: Optional[int]
 
-    def setup_viewer(self, fname: str, number: int) -> None:
+    def setup_viewer(self, fname: str, number: int, render_engine: str) -> None:
         self.current_page_number = number
-        self.pdf_viewer = PDFViewer(fname)
+        self.pdf_viewer = PDFViewer(fname, render_engine)
 
     def zoom_page_region(self, scale: float) -> None:
         if self.page_region is None:

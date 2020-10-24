@@ -1,15 +1,17 @@
 import functools
-from typing import Tuple, List, Optional
+from typing import Tuple, List
 
 import PIL
 from pdf2image import convert_from_path
 
-from .renderer import Renderer
+from .renderer import get_renderer
 
 
 class PDFViewer:
-    def __init__(self, fname: str) -> None:
+    def __init__(self, fname: str, render_engine: str = 'ANSI') -> None:
         self.fname = fname
+
+        self.Renderer = get_renderer(render_engine)
 
     def get_image_size(self, number: int) -> Tuple[int, int]:
         return self.get_image(number).size
@@ -41,4 +43,4 @@ class PDFViewer:
         if img is None:
             return None
 
-        return Renderer(img).render(target_size, source_region)
+        return self.Renderer(img).render(target_size, source_region)

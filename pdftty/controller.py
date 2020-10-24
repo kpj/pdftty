@@ -21,12 +21,16 @@ class Controller:
         screen = urwid.raw_display.Screen()
         self.screen_size = screen.get_cols_rows()
 
-    def main(self, fname: str, page_number: int = 1) -> None:
+    def main(
+        self,
+        fname: str, page_number: int = 1,
+        render_engine: str = 'ANSI'
+    ) -> None:
         self.loop = urwid.MainLoop(
             self.view, unhandled_input=self._unhandled_input)
 
         # setup PDF viewer
-        self.model.setup_viewer(fname, page_number)
+        self.model.setup_viewer(fname, page_number, render_engine)
         self.view.set_title(os.path.basename(fname))
         self.view.set_title_pagecount(page_number)
 
