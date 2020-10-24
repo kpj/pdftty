@@ -19,6 +19,52 @@ class Model:
         self.current_page_number = number
         self.pdf_viewer = PDFViewer(fname)
 
+    def zoom_page_region(self, scale: float) -> None:
+        if self.page_region is None:
+            self.page_region = (
+                0, 0,
+                *self.pdf_viewer.get_image_size(self.current_page_number)
+            )
+
+        x, y, width, height = self.page_region
+
+        # do scaling
+        width *= scale
+        height *= scale
+
+        # check if we are out-of-bounds
+        orig_width, orig_height = self.pdf_viewer.get_image_size(self.current_page_number)
+        if width > orig_width:
+            width = orig_width
+        if height > orig_height:
+            height = orig_height
+
+        # set new region
+        if (width, height) == (orig_width, orig_height):
+            # TODO: this is a bad way of checking this
+            self.page_region = None
+        else:
+            self.page_region = (x, y, width, height)
+
+    def move_page_region(self, dx: int, dy: int) -> None:
+        if self.page_region is None:
+            return
+
+        # move region
+        x, y, width, height = self.page_region
+        x += dx
+        y += dy
+        width += dx
+        height += dy
+
+        # check bounds
+        orig_width, orig_height = self.pdf_viewer.get_image_size(self.current_page_number)
+        if x < 0 or y < 0 or width > orig_width or height > orig_height:
+            return
+
+        # update region
+        self.page_region = (x, y, width, height)
+
     def get_page_content(
         self,
         target_size: Tuple[int, int],

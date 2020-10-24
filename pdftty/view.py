@@ -29,5 +29,7 @@ class View(urwid.WidgetWrap):
     def keypress(self, size: Tuple[int, int], key: str) -> Optional[str]:
         if key in ('up', 'down', 'right', 'left'):
             urwid.emit_signal(self, 'move', key)
+        if key in ('+', '-', '='):
+            urwid.emit_signal(self, 'zoom', key)
         else:
             return super().keypress(size, key)  # propagate event

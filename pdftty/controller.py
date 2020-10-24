@@ -12,8 +12,9 @@ class Controller:
         self.view = View(self)
 
         # setup communication
-        urwid.register_signal(View, ['move'])
+        urwid.register_signal(View, ['move', 'zoom'])
         urwid.connect_signal(self.view, 'move', self.handle_move)
+        urwid.connect_signal(self.view, 'zoom', self.handle_zoom)
 
         # setup remaining things
         screen = urwid.raw_display.Screen()
@@ -42,13 +43,42 @@ class Controller:
 
             if number is not None:
                 self.model.current_page_number = number
+                self.model.page_region = None  # reset cropping
 
     def handle_move(self, key: str) -> None:
-        if key in ('left', 'right'):
-            step = 1 if key == 'right' else -1
-            new_number = self.model.current_page_number + step
+        if self.model.page_region is None:
+            # change pages
+            if key in ('left', 'right'):
+                if self.model.page_region is not None:
+                    # can only change page if zoomed out
+                    return
 
-            self.display_page(new_number)
+                step = 1 if key == 'right' else -1
+                new_number = self.model.current_page_number + step
+
+                self.display_page(new_number)
+        else:
+            # move page crop around
+            step_size = 100  # TODO: make this dependend on page size
+            move_coords = {
+                'up': (0, -step_size),
+                'down': (0, step_size),
+                'left': (-step_size, 0),
+                'right': (step_size, 0)
+            }.get(key, None)
+
+            if move_coords is not None:
+                self.model.move_page_region(*move_coords)
+                self.display_page()
+
+    def handle_zoom(self, key: str) -> None:
+        if key == '=':
+            self.model.page_region = None
+        else:
+            scale = 1.2 if key == '-' else 0.8
+            self.model.zoom_page_region(scale)
+
+        self.display_page()
 
     def _unhandled_input(self, key: str) -> None:
         if key in ('Q', 'q', 'esc'):
