@@ -14,7 +14,7 @@ class PDFViewer:
     def get_image_size(self, number: int) -> Tuple[int, int]:
         return self.get_image(number).size
 
-    @functools.lru_cache(maxsize=10)
+    @functools.lru_cache(maxsize=50)
     def get_image(self, number: int) -> PIL.Image:
         if number < 1:  # TODO: also check for max number?
             return None
