@@ -31,3 +31,9 @@ Options:
   --render-engine [ANSI|CACA]  Which engine to use to render PDF page as text.
   --help                       Show this message and exit.
 ```
+
+The following controls can be used to navigate the PDF:
+* `[left]`/`[right]`: previous/next PDF page
+* `[-]`/`[+]`: zoom out/in
+* `[=]`: reset zoom
+* `[left]`/`[right]`/`[up]`/`down`: move zoom window (when zoomed in)
