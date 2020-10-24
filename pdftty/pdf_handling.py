@@ -1,3 +1,4 @@
+import functools
 from typing import Tuple, List, Optional
 
 import PIL
@@ -11,9 +12,9 @@ class PDFViewer:
         self.fname = fname
 
     def get_image_size(self, number: int) -> Tuple[int, int]:
-        # TODO: implement image caching
         return self.get_image(number).size
 
+    @functools.lru_cache(maxsize=10)
     def get_image(self, number: int) -> PIL.Image:
         if number < 1:  # TODO: also check for max number?
             return None
