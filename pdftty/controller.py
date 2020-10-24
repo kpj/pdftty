@@ -1,3 +1,4 @@
+import os
 from typing import Optional
 
 import urwid
@@ -26,6 +27,8 @@ class Controller:
 
         # setup PDF viewer
         self.model.setup_viewer(fname, page_number)
+        self.view.set_title(os.path.basename(fname))
+        self.view.set_title_pagecount(page_number)
 
         # display initial page
         self.display_page()
@@ -43,6 +46,8 @@ class Controller:
 
             if number is not None:
                 self.model.current_page_number = number
+                self.view.set_title_pagecount(number)
+
                 self.model.page_region = None  # reset cropping
 
     def handle_move(self, key: str) -> None:
