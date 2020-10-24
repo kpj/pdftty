@@ -8,7 +8,7 @@ readme = "README.md"
 repository = "https://github.com/kpj/pdftty"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.6"
 urwid = "^2.1.2"
 Pillow = "^8.0.0"
 pdf2image = "^1.14.0"
