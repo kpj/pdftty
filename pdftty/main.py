@@ -9,7 +9,9 @@ from .controller import Controller
     '--render-engine', default='ANSI',
     type=click.Choice(['ANSI', 'CACA'], case_sensitive=False),
     help='Which engine to use to render PDF page as text.')
-@click.argument('fname', type=click.Path(exists=True, dir_okay=False))
+@click.argument(
+    'fname', type=click.Path(exists=True, dir_okay=False),
+    metavar='<file>')
 def main(page: int, fname: str, render_engine: str) -> None:
     Controller().main(fname, page, render_engine)
 
