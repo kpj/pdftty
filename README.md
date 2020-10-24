@@ -4,6 +4,10 @@
 
 A PDF viewer for the terminal.
 
+ANSI renderer                              |  CACA renderer
+:-----------------------------------------:|:-------------------------:
+![Example ANSI](gallery/example_ansi.png)  |  ![Example CACA](gallery/example_caca.png)
+
 
 ## Installation
 
