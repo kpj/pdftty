@@ -33,6 +33,11 @@ class Model:
         height *= scale
 
         # check if we are out-of-bounds
+        if width - x < 1 or height - y < 1:
+            # TODO: who cares about floating number issues?
+            width /= scale
+            height /= scale
+
         orig_width, orig_height = self.pdf_viewer.get_image_size(self.current_page_number)
         if width > orig_width:
             width = orig_width
