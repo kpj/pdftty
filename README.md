@@ -1,5 +1,7 @@
 # pdftty
 
+[![PyPI](https://img.shields.io/pypi/v/pdftty.svg?style=flat)](https://pypi.python.org/pypi/pdftty)
+
 A PDF viewer for the terminal.
 
 
